@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center">
+  <h1 class="animate__animated animate__wobble mt-2">Display Model Instances</h1>
+</div>
+<div class="container">
+  <form action="{% url 'show_objects' %}" method="post" class="container" id="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-9 mt-4">
+        <div class="form-group">
+          <select name="modelname" required="required">
+            {% for model in modelNames %}
+              <option value="{{ model }}">{{ model }}</option>
+            {% endfor %}
+          </select>
+          <label class="control-label" for="select">Select model</label><i class="bar"></i>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="button-container">
+          <button class="button" type="submit" style="border-radius:10px;font-size:1rem;"><span><strong>SUBMIT</strong></span></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  {% if get %}
+    <h3 class="text-center mt-5">Select a model and submit to display object instances.</h3>
+  {% else %}
+    <h2 class='text-center h2text'>List of {{objectType}}</h2>
+    {% if noEntry %}
+      <h4 class="text-center mt-5">There is no entry to display.</h4>
+    {% else %}
+    <div class="table-responsive-sm">
+      <table class="table">
+        <thead>
+          <tr>
+            {% for field in fieldNames %}
+              <th scope="col">{{ field }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for x in objects %}
+            <tr>
+              {% for property,value in x.items %}
+                {% if property == 'id' %}
+                  <th scope="row">{{ value }}</th>
+                {% else %}
+                  <td>{{ value }}</td>
+                {% endif %}
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

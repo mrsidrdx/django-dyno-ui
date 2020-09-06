@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+{% if modelCreated %}
+  <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  <strong>Hurray!</strong> New model {{ modelName }} created successfully.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+{% elif modelExists %}
+  <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+  <strong>Sorry!</strong> {{ modelName }} model already exists.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+{% endif %}
+<div class="text-center">
+  <h1 class="animate__animated animate__wobble mt-2">Dynamic Model Creation</h1>
+</div>
+<form action="{% url 'create_models' %}" method="post" class="container" id="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class='text-center h2text'>Model Schema</h2>
+    <div class="form-group">
+      <input type="text" pattern="^[A-Z][a-z]+" required="required" name="modelname" placeholder="Enter modelname"/>
+      <label class="control-label" for="input">Modelname</label>
+			<i class="bar"></i>
+			<i class="input-error">Please enter modelname (Example : Car)</i>
+    </div>
+    <h2 class='text-center h2text' id="field1">Field Schema 1</h2>
+		<div class="form-group">
+      <input type="text" pattern="[a-zA-Z]+" required="required" name="field1" placeholder="Enter fieldname"/>
+      <label class="control-label" for="input">Fieldname</label>
+			<i class="bar"></i>
+			<i class="input-error">Please enter fieldname (Example : currentMileage)</i>
+    </div>
+    <div class="form-group">
+      <select name="datatype1" required="required">
+        <option value="character">CharField</option>
+        <option value="text">TextField</option>
+        <option value="integer">IntegerField</option>
+        <option value="float">FloatField</option>
+        <option value="boolean">BooleanField</option>
+        <option value="date">DateTimeField</option>
+      </select>
+      <label class="control-label" for="select">Select datatype</label><i class="bar"></i>
+    </div>
+    <div class="form-group">
+     <input type="number" min="0" max="6000" required="required" name="maxlen1" placeholder="Enter maxlength"/>
+     <label class="control-label" for="input">Maxlength</label>
+     <i class="bar"></i>
+     <i class="input-error">Please enter integer maxlength (0 - 6000)</i>
+    </div>
+    <div class="form-group">
+      <select name="null1" required="required">
+        <option value="False">False</option>
+        <option value="True">True</option>
+      </select>
+      <label class="control-label" for="select">Choose null or not?</label><i class="bar"></i>
+    </div>
+    <div class="form-group">
+      <select name="unique1" required="required">
+        <option value="False">False</option>
+        <option value="True">True</option>
+      </select>
+      <label class="control-label" for="select">Choose unique or not?</label>
+      <i class="bar"></i>
+    </div>
+    <div class="row" id="buttonArea">
+      <div class="col-sm-6">
+        <div class="button-container">
+          <button class="button" type="button" style="border-radius:10px;font-size:2rem;" onclick="addFieldForm()"><span class="fa fa-plus"></span></button>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="button-container">
+          <button class="button" type="submit" style="border-radius:10px;font-size:2rem;"><span><strong>SUBMIT</strong></span></button>
+        </div>
+      </div>
+    </div>
+</form>
+{% endblock %}
