@@ -1,4 +1,3 @@
-# https://github.com/rvinzent/django-dynamic-models/wiki/Field-Schema
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from django.views.decorators.csrf import csrf_protect

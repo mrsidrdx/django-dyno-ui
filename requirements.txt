@@ -1,2 +1,1 @@
 Django==3.0.3
-django-dynamic-model==0.2.0
